@@ -10,7 +10,7 @@ jobs:
   check-and-scan:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
 
       - name: Python Syntax Check (Zero Third-Party Dependencies)
         run: python3 -m py_compile spore-guard.py
