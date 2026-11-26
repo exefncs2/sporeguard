@@ -1,0 +1,25 @@
+name: Security & Syntax Check
+
+on:
+  push:
+    branches: ["main"]
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  check-and-scan:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Python Syntax Check (Zero Third-Party Dependencies)
+        run: python3 -m py_compile spore-guard.py
+
+      - name: Trivy Repository Security Scan
+        uses: aquasecurity/trivy-action@0.30.0
+        with:
+          scan-type: 'fs'
+          scan-ref: '.'
+          format: 'table'
+          severity: 'MEDIUM,HIGH,CRITICAL'
+          exit-code: '0'

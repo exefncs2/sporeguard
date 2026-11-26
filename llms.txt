@@ -1,0 +1,17 @@
+# SporeGuard
+
+> Single-file, zero-dependency Python 3 local security anomaly radar powered by SporeFlow (`:9090`) and SporeVault (`:8081`).
+
+## Quick Facts
+
+- Repository: https://github.com/exefncs2/sporeguard
+- Siblings: https://github.com/exefncs2/sporeflow · https://github.com/exefncs2/sporevault
+- Runtime: Pure Python 3 standard library (`0` pip dependencies)
+- Why Python: Control-plane `Type=oneshot` glue script (`journalctl`, `ss`, `notify-send`, `systemctl`) offloading vector baseline matching to Rust (`SporeFlow` + `SporeVault`); instantly auditable and editable without recompilation.
+
+## CLI Commands
+
+- `spore-guard.py --learn`: Build 24h normalized baseline in SporeVault `security-baseline` cluster.
+- `spore-guard.py --scan`: Scan recent `err..emerg` logs + non-loopback listening ports (`ss -tulnH`), alert to `security-alert` cluster + `notify-send` with 2h SHA-256 cooldown.
+- `spore-guard.py --set-interval <MINUTES>`: Configure `systemd --user` timer (`spore-guard.timer`).
+- `spore-guard.py --test-alert`: End-to-end test alert to SporeVault + desktop notification.
